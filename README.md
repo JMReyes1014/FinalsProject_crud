@@ -7,4 +7,4 @@ If you want to test out my project then you can download and import my 'database
 
 
 Here is the Entity Relation Diagram of my MySQL Database
-![Portfolio drawio](https://github.com/JMReyes1014/FinalsProject_crud/assets/147701292/6d233c47-13e1-447b-836a-f35eb8c20d13)
+![Portfolio drawio (1)](https://github.com/JMReyes1014/FinalsProject_crud/assets/147701292/126fdaf8-47b5-4c86-94a9-befa74e28d01)
