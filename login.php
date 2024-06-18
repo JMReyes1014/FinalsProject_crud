@@ -17,9 +17,6 @@
   <!-- STYLE.CSS LINK -->
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="icon" href="./assets/images/cat-icon.png">
-  <!-- MATERIAL ICONS LINK -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
   <title>JM Reyes | Webpage</title>
 </head>
 
@@ -49,71 +46,34 @@
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active cog-active" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+            <a class="nav-link active cog-active" aria-current="page" href="login.php"><i class="las la-cog"></i></a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section id="settings" class="full-height px-lg-5">
-    <div class="container settings-container mt-5 p-md-4">
+  <section id="login" class="full-height px-lg-5">
 
-        <div class="row-lg-3 settings-nav">
-            <a class="settings-option" href="settings.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Skills</span>
-            </a>
-            <a class="settings-option" href="manage-education.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Education</span>
-            </a>
-            <a class="settings-option" href="manage-projects.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Projects</span>
-            </a>
-            <a class="settings-option" href="add-skills.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Skills</span>
-            </a>
-            <a class="settings-option" href="add-education.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Education</span>
-            </a>
-            <a class="settings-option settings-active" href="add-project.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Project</span>
-            </a>    
+    <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <h3 class="header-brand">LOGIN AS ADMIN</h3>
         </div>
 
-        <div class="row-lg-7 settings-main">
-          <div class="col">
-            <h4 style="font-size: 40px">Add Project</h4>
-          </div>
-
-          <div class="container">
-            <form action="">
-              <div class="form-group col-lg-12 my-4">
-                <input type="text" class="form-control" placeholder="Enter campus name">
+        <div class="form-login">
+            <form class="px-4 py-3">
+              <div class="mb-3 login-input">
+                <input type="text" class="form-control" id="" placeholder="Username">
               </div>
-              <div class="form-group col-lg-12 my-4">
-                <input type="text" class="form-control" placeholder="Enter school years">
+              <div class="mb-3 login-input">
+                <input type="password" class="form-control" id="" placeholder="Password">
               </div>
-              <div class="form-group col-lg-12 my-4">
-                <label for="" class="mt-lg-0 mb-lg-2">Upload project picture</label>
-                <input type="file" name="" id="file" accept="image/jpeg, image/png">
-                <label class="upload-file-lbl" for="file">
-                  <i class="material-icons">add_photo_alternate</i> &nbsp;
-                  Choose a Photo
-                </label>
+              <div class="mb-3">
               </div>
-              
-              <div class="form-group" style="margin-top: 80px;">
-                <button type="submit" class="button-27 btn-add">
-                  Add Project
-                </button>
-              </div>    
-
+              <a type="submit" class="button-27 login-input mx-0" href="settings.php">Sign in</a>
             </form>
-          </div>
-
         </div>
 
-    </div>
   </section>
 
    <!-- FOOTER -->

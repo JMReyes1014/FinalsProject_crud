@@ -339,6 +339,10 @@ a {
   color: var(--color-brand);
 }
 
+.cog-active {
+ pointer-events: none; 
+}
+
 /* END NAVBAR*/
 
 .bg-base {
@@ -512,6 +516,15 @@ footer {
 
 input.form-control {
   height: 44px;
+}
+
+.form-login {
+  display: flex;
+  justify-content: center;
+}
+
+.login-input {
+  width: 500px;
 }
 
 textarea {

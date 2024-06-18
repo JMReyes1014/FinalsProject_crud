@@ -46,7 +46,7 @@
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+            <a class="nav-link cog-active active" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
           </li>
         </ul>
       </div>
@@ -95,22 +95,22 @@
                 <tbody>
                   <tr>
                     <td class="td-title">Time Management</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
                     <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                   </tr>
                   <tr>
                     <td class="td-title">Quick Learner</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
                     <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                   </tr>
                   <tr>
                     <td class="td-title">Web Design</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
                     <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                   </tr>
                   <tr>
                     <td class="td-title">Coding</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
                     <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                   </tr>
                 </tbody>

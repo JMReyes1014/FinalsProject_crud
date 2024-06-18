@@ -68,7 +68,7 @@
             </li>
             <li class="nav-item">
               <a
-                class="nav-link active"
+                class="nav-link active cog-active"
                 aria-current="page"
                 href="settings.php"
                 ><i class="las la-cog"></i
@@ -122,12 +122,12 @@
               <tbody>
                 <tr>
                   <td class="td-title">LAYA (Legal Aid at Your Access)</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-projects.php">Edit</a></td>
                   <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                 </tr>
                 <tr>
                   <td class="td-title">iPaws</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-projects.php">Edit</a></td>
                   <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                 </tr>
               </tbody>

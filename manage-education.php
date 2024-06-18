@@ -25,7 +25,7 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container fluid mx-lg-auto">
-      <a class="navbar-brand navbar-font" href="index.html">
+      <a class="navbar-brand navbar-font" href="index.php">
         <span class="name-logo"><i class="las la-cat"></i> JM REYES</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+            <a class="nav-link active cog-active" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
           </li>
         </ul>
       </div>
@@ -95,17 +95,17 @@
               <tbody>
                 <tr>
                   <td class="td-title">Canossa Academy Lipa</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
                   <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                 </tr>
                 <tr>
                   <td class="td-title">APEC Schools Lipa</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
                   <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                 </tr>
                 <tr>
                   <td class="td-title">National University Lipa</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="">Edit</a></td>
+                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
                   <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
                 </tr>
               </tbody>
