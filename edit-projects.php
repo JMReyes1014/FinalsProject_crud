@@ -47,7 +47,7 @@
                         <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active cog-active" aria-current="page" href="settings.php"><i
+                        <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page" href="settings.php"><i
                                 class="las la-cog"></i></a>
                     </li>
                 </ul>

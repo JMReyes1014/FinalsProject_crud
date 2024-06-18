@@ -46,7 +46,7 @@
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active cog-active" aria-current="page" href="login.php"><i class="las la-cog"></i></a>
+            <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page" href="login.php"><i class="las la-cog"></i></a>
           </li>
         </ul>
       </div>
@@ -60,17 +60,17 @@
           <h3 class="header-brand">LOGIN AS ADMIN</h3>
         </div>
 
-        <div class="form-login">
+        <div class="form-login" style="display: flex; justify-content: center;">
             <form class="px-4 py-3">
-              <div class="mb-3 login-input">
+              <div class="mb-3 login-input" style="width: 500px;">
                 <input type="text" class="form-control" id="" placeholder="Username">
               </div>
-              <div class="mb-3 login-input">
+              <div class="mb-3 login-input" style="width: 500px;">
                 <input type="password" class="form-control" id="" placeholder="Password">
               </div>
               <div class="mb-3">
               </div>
-              <a type="submit" class="button-27 login-input mx-0" href="settings.php">Sign in</a>
+              <a type="submit" class="button-27 login-input mx-0" style="width: 500px;" href="settings.php">Sign in</a>
             </form>
         </div>
 
