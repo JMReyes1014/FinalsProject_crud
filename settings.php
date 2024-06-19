@@ -16,9 +16,10 @@ if (isset($_SESSION['login_success'])) {
               title: "Login Successful",
               text: "Welcome to the settings page!",
               confirmButtonText: "OK",
-              background: "#212529",
+              confirmButtonColor: "#ef4f4f",
+              background: "#0e0d0d",
               color: "#fff",
-              iconColor: "#28a745"
+              iconColor: "#ef4f4f"
           });
       });
   </script>';
