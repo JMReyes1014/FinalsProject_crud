@@ -1,3 +1,31 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_name'])) {
+    header("Location: login.php");
+    exit();
+}
+
+if (isset($_SESSION['login_success'])) {
+  echo '
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          Swal.fire({
+              icon: "success",
+              title: "Login Successful",
+              text: "Welcome to the settings page!",
+              confirmButtonText: "OK",
+              background: "#212529",
+              color: "#fff",
+              iconColor: "#28a745"
+          });
+      });
+  </script>';
+  unset($_SESSION['login_success']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +42,8 @@
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
   <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <!-- Include SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <!-- STYLE.CSS LINK -->
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="icon" href="./assets/images/cat-icon.png">
@@ -47,6 +77,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link cog-active active" style="pointer-events: none;" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></i></a>
           </li>
         </ul>
       </div>
@@ -144,7 +180,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-
+  <!-- SWEET ALERT2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
   <!-- Animation on scroll cdn js -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>

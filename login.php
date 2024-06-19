@@ -46,7 +46,8 @@
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page" href="login.php"><i class="las la-cog"></i></a>
+            <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page" href="login.php"><i
+                class="las la-cog"></i></a>
           </li>
         </ul>
       </div>
@@ -56,43 +57,55 @@
   <section id="login" class="full-height px-lg-5">
 
     <div class="row justify-content-center text-center">
-        <div class="col-lg-8">
-          <h3 class="header-brand">LOGIN AS ADMIN</h3>
-        </div>
+      <div class="col-lg-8">
+        <h3 class="header-brand">LOGIN AS ADMIN</h3>
+      </div>
 
-        <div class="form-login" style="display: flex; justify-content: center;">
-            <form class="px-4 py-3">
-              <div class="mb-3 login-input" style="width: 500px;">
-                <input type="text" class="form-control" id="" placeholder="Username">
-              </div>
-              <div class="mb-3 login-input" style="width: 500px;">
-                <input type="password" class="form-control" id="" placeholder="Password">
-              </div>
-              <div class="mb-3">
-              </div>
-              <a type="submit" class="button-27 login-input mx-0" style="width: 500px;" href="settings.php">Sign in</a>
-            </form>
-        </div>
+      <div class="form-login" style="display: flex; justify-content: center;">
+
+        <form class="px-4 py-3" method="post" action="login-logic.php">
+          <div class="mb-3 login-input" style="width: 500px;">
+            <input type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+
+          <div class="mb-3 login-input" style="width: 500px;">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+
+          <div class="mb-3"></div>
+
+          <input type="submit" class="button-27 login-input mx-0" style="width: 500px;" name="login" value="Login">
+
+          <?php if (isset($_GET['error'])) { ?>
+            <div class="alert alert-danger alert-dismissible fade show login-input mt-lg-3" role="alert">
+              <?php echo htmlspecialchars($_GET['error']); ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <?php } ?>
+        </form>
+
+      </div>
 
   </section>
 
-   <!-- FOOTER -->
-    <footer class="py-5 p-lg-3">
-      <div class="container">
-        <div class="row gy-4 justify-content-between">
-          <div class="col-auto">
-            <p class="mb-0 mt-2">JM REYES @ 2024 || Finals Project in Advanced Database System</p>
-          </div>
-          <div class="col-auto">
-            <div class="social-icons">
-              <a href="https://www.facebook.com/KuddliestDudeYouHaveEverKnown" target="_blank"><i class="lab la-facebook"></i></a>
-              <a href="https://www.instagram.com/itzjmbruhhh/" target="_blank"><i class="lab la-instagram"></i></a>
-              <a href="https://github.com/JMReyes1014" target="_blank"><i class="lab la-github"></i></a>
-            </div>
+  <!-- FOOTER -->
+  <footer class="py-5 p-lg-3">
+    <div class="container">
+      <div class="row gy-4 justify-content-between">
+        <div class="col-auto">
+          <p class="mb-0 mt-2">JM REYES @ 2024 || Finals Project in Advanced Database System</p>
+        </div>
+        <div class="col-auto">
+          <div class="social-icons">
+            <a href="https://www.facebook.com/KuddliestDudeYouHaveEverKnown" target="_blank"><i
+                class="lab la-facebook"></i></a>
+            <a href="https://www.instagram.com/itzjmbruhhh/" target="_blank"><i class="lab la-instagram"></i></a>
+            <a href="https://github.com/JMReyes1014" target="_blank"><i class="lab la-github"></i></a>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 
   <!-- Bootstrap cdn js -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

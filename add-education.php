@@ -1,3 +1,31 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_name'])) {
+    header("Location: login.php");
+    exit();
+}
+
+require_once('assets\classes\database.php');
+    $con = new database();
+
+    //Error if database connection is unsuccessful
+    if(!$con) {
+      die(database_error($con));
+    }
+
+
+    if(isset($_POST['submit'])) {
+      $level = $_POST['education_level'];
+      $campus = $_POST['education_campus'];
+      $years = $_POST['education_years'];
+      $attainments = $_POST['education_attainments'];
+    }
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,11 +76,18 @@
           <li class="nav-item">
             <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></i></a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 
+ <!-- MAIN -->
   <section id="settings" class="full-height px-lg-5">
     <div class="container settings-container mt-5 p-md-4">
 
@@ -83,18 +118,18 @@
           </div>
 
           <div class="container">
-            <form action="">
+            <form action="POST">
               <div class="form-group col-lg-12 my-lg-4">
-                <input type="text" class="form-control" placeholder="Enter level of education">
+                <input type="text" class="form-control" name="education_level" placeholder="Enter level of education" autocomplete="off">
               </div>
               <div class="form-group col-lg-12 my-lg-4">
-                <input type="text" class="form-control" placeholder="Enter campus name">
+                <input type="text" class="form-control" name="education_campus" placeholder="Enter campus name" autocomplete="off">
               </div>
               <div class="form-group col-lg-12 my-lg-4">
-                <input type="text" class="form-control" placeholder="Enter school years">
+                <input type="text" class="form-control" name="education_years" placeholder="Enter school years" autocomplete="off">
               </div>
               <div class="form-group col-lg-12 my-lg-4">
-                <textarea class="form-control" rows="5" placeholder="Enter educational attainments" name="" id=""></textarea>
+                <textarea class="form-control" rows="5" name="education_attainments" placeholder="Enter educational attainments" autocomplete="off"></textarea>
               </div>     
               <div class="form-group col-lg-12 my-lg-2">
                 <button type="submit" class="button-27 btn-add">
