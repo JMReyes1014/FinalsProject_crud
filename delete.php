@@ -14,6 +14,7 @@
             die(mysqli_error($con));
         } else {
             header('location: settings.php');
+            exit();
         }
     }
 
@@ -28,6 +29,7 @@
             die(mysqli_error($con));
         } else {
             header('location: manage-education.php');
+            exit();
         }
     }
 
