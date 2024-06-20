@@ -235,21 +235,6 @@ include ('connect.php');
             }
         }
       ?>
-    <!--
-        <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
-          <div class="card-custom rounded-4 bg-base shadow-effect">
-            <div class="card-custom-image rounded-4">
-              <img class="rounded-4" src="./assets/images/Project-2.png" alt="">
-            </div>
-            <div class="card-custom-content p-4">
-              <h4 class="header-brand">iPaws</h4>
-              <p>"A comprehensive pet tracker app that enables you to connect with fellow pet owners, locate the nearest
-                veterinary services, and monitor your pet's daily activities and needs."</p>
-              <a href="" class="link-custom">Read More</a>
-            </div>
-          </div>
-        </div> -->
-
       </div>
 
     </div>

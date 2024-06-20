@@ -1,5 +1,6 @@
 <?php
 session_start();
+include ('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
@@ -7,7 +8,86 @@ if (!isset($_SESSION['user_name'])) {
     exit();
 }
 
+$alertScript = ""; // Initialize an empty script variable
+
+// Retrieve project information for the given ID
+$dis_name = '';
+$dis_desc = '';
+$dis_photo = '';
+if (isset($_GET['update-projectid'])) {
+    $id = $_GET['update-projectid'];
+    $sql = "SELECT * FROM `projects` WHERE projects_ID = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $dis_name = $row['project_title'];
+        $dis_desc = $row['project_description'];
+        $dis_photo = $row['project_photo'];
+    }
+    $stmt->close();
+}
+
+// Handle form submission for editing project
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if file was uploaded
+    if (isset($_FILES['file']) && $_FILES['file']['name']) {
+        $file_name = $_FILES['file']['name'];
+        $file_temp = $_FILES['file']['tmp_name'];
+        $file_destination = 'uploads/' . $file_name;
+        if (move_uploaded_file($file_temp, $file_destination)) {
+            // Update project photo in the database
+            $sql_update_photo = "UPDATE `projects` SET project_photo = ? WHERE projects_ID = ?";
+            $stmt_update_photo = $con->prepare($sql_update_photo);
+            $stmt_update_photo->bind_param("si", $file_name, $id);
+            if ($stmt_update_photo->execute()) {
+                // Update displayed photo
+                $dis_photo = $file_name;
+                $stmt_update_photo->close();
+                echo '
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Project Updated Successfully",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#4CAF50",
+                                background: "#0e0d0d",
+                                color: "#fff",
+                                iconColor: "#4CAF50"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "manage-projects.php?update-projectid=' . $id . '";
+                                }
+                            });
+                        });
+                    </script>';
+                } else {
+                echo '
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "Failed to update skill: ' . $stmt->error . '",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#f44336",
+                                background: "#0e0d0d",
+                                color: "#fff",
+                                iconColor: "#f44336"
+                            });
+                        });
+                    </script>';
+            }
+        }
+    }
+}
+
+$con->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +145,8 @@ if (!isset($_SESSION['user_name'])) {
                         <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></i></a>
+                        <a class="nav-link" aria-current="page" href="logout.php"><i
+                                class="las la-sign-out-alt"></i></i></a>
                     </li>
                 </ul>
             </div>
@@ -89,23 +170,32 @@ if (!isset($_SESSION['user_name'])) {
                         <h4 style="font-size: 60px; text-align: center; margin-bottom: 30px;">Edit Project</h4>
                     </div>
 
-                    <form action="">
+                    <form method="post" enctype="multipart/form-data">
                         <div>
-                            <input type="text" class="form-control my-3" placeholder="Current title" />
+                            <input type="text" name="name" class="form-control my-3" value="<?php echo $dis_name ?>" />
                         </div>
 
                         <div>
-                            <textarea name="" id="" rows="4" class="form-control my-3"
-                                placeholder="Current description"></textarea>
+                            <textarea name="desc" id="desc" rows="4"
+                                class="form-control my-3"><?php echo $dis_desc ?></textarea>
                         </div>
-                        <div class="form-group col-lg-12 my-4 m-lg-1">
-                            <label for="" class="mt-lg-0 mb-lg-2">Change project picture</label>
-                            <input type="file" name="" id="file" accept="image/jpeg, image/png">
-                            <label class="upload-file-lbl" for="file">
-                                <i class="material-icons">add_photo_alternate</i> &nbsp;
-                                Choose a Photo
-                            </label>
+
+                        <div class="form-group col-lg-12 my-4 d-flex align-items-center">
+                            <div class="col-lg-6">
+                                <label for="file" class="mt-lg-0 mb-lg-2">Change project picture</label>
+                                <input type="file" name="file" id="file" accept="image/jpeg, image/png"
+                                    onchange="previewFile()">
+                                <label class="upload-file-lbl" for="file">
+                                    <i class="material-icons">add_photo_alternate</i> &nbsp;
+                                    Choose a Photo
+                                </label>
+                            </div>
+                            <div id="preview" class="col-lg-6 ms-3">
+                                <img id="previewImage" src="uploads/<?php echo $dis_photo; ?>" alt="Image Preview"
+                                    style="margin-bottom: -50px; margin-left: -170px; max-height: 200px; max-width: 300px; display: <?php echo $dis_photo ? 'block' : 'none'; ?>;">
+                            </div>
                         </div>
+
                         <div class="form-group" style="margin-top: 70px;">
                             <button type="submit" class="button-27 btn-add" style="background-color: #000000;">
                                 Edit Project
@@ -117,6 +207,7 @@ if (!isset($_SESSION['user_name'])) {
             </div>
         </div>
     </section>
+
 
     <!-- FOOTER -->
     <footer class="py-5 p-lg-3">
@@ -139,12 +230,33 @@ if (!isset($_SESSION['user_name'])) {
             </div>
         </div>
     </footer>
+    <script>
+
+        function previewFile() {
+            var preview = document.querySelector('#previewImage');
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+                preview.style.display = 'block'; // Display the preview image
+            };
+
+            if (file) {
+                reader.readAsDataURL(file); // Read the file as a data URL
+            } else {
+                preview.src = "uploads/<?php echo $dis_photo; ?>"; // Display the original image if no new file selected
+                preview.style.display = '<?php echo $dis_photo ? 'block' : 'none'; ?>'; // Adjust display based on $dis_photo
+            }
+        }
+    </script>
 
     <!-- Bootstrap cdn js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
+    <!-- SweetAlert2 cdn js -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Animation on scroll cdn js -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>

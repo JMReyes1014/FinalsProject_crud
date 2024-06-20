@@ -105,7 +105,7 @@ if (!isset($_SESSION['user_name'])) {
             <table>
               <thead>
                 <tr>
-                  <th>Title</th>
+                  <th>Campus Name</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>

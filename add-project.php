@@ -184,34 +184,37 @@ $con->close();
         </div>
 
         <div class="container">
-        <form method="post" enctype="multipart/form-data">
-  <div class="form-group col-lg-12 my-4">
-    <input type="text" class="form-control" name="title" placeholder="Enter project title" required>
-  </div>
-  <div class="form-group col-lg-12 my-4">
-  <textarea class="form-control" rows="3" name="description" placeholder="Enter project description" autocomplete="off"></textarea>
-  </div>
-  
-  <div class="form-group col-lg-12 my-4 d-flex align-items-center">
-    <div class="col-lg-6">
-      <label for="file" class="mt-lg-0 mb-lg-2">Upload project picture</label>
-      <input type="file" name="photo" id="file" accept="image/jpeg, image/png" required onchange="previewFile()">
-      <label class="upload-file-lbl" for="file">
-        <i class="material-icons">add_photo_alternate</i> &nbsp;
-        Choose a Photo
-      </label>
-    </div>
-    <div id="preview" class="col-lg-6 ms-3">
-      <img id="previewImage" src="#" alt="Image Preview" style="margin-left: -100px; margin-bottom: -50px; display: none; max-height: 200px; max-width: 300px;">
-    </div>
-  </div>
-  
-  <div class="form-group" style="margin-top: 80px;">
-    <button type="submit" name="submit" class="button-27 btn-add">
-      Add Project
-    </button>
-  </div>    
-</form>
+          <form method="post" enctype="multipart/form-data">
+            <div class="form-group col-lg-12 my-4">
+              <input type="text" class="form-control" name="title" placeholder="Enter project title" required>
+            </div>
+            <div class="form-group col-lg-12 my-4">
+              <textarea class="form-control" rows="3" name="description" placeholder="Enter project description"
+                autocomplete="off"></textarea>
+            </div>
+
+            <div class="form-group col-lg-12 my-4 d-flex align-items-center">
+              <div class="col-lg-6">
+                <label for="file" class="mt-lg-0 mb-lg-2">Upload project picture</label>
+                <input type="file" name="photo" id="file" accept="image/jpeg, image/png" required
+                  onchange="previewFile()">
+                <label class="upload-file-lbl" for="file">
+                  <i class="material-icons">add_photo_alternate</i> &nbsp;
+                  Choose a Photo
+                </label>
+              </div>
+              <div id="preview" class="col-lg-6 ms-3">
+                <img id="previewImage" src="#" alt="Image Preview"
+                  style="margin-left: -100px; margin-bottom: -50px; display: none; max-height: 200px; max-width: 300px;">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 80px;">
+              <button type="submit" name="submit" class="button-27 btn-add">
+                Add Project
+              </button>
+            </div>
+          </form>
         </div>
 
       </div>

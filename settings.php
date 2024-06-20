@@ -126,7 +126,7 @@ if (isset($_SESSION['login_success'])) {
               <table>
                 <thead>
                   <tr>
-                    <th>Skill</th>
+                    <th>Skill Name</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
