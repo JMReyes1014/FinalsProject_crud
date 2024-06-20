@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2024 at 04:57 PM
+-- Generation Time: Jun 20, 2024 at 09:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -51,6 +51,15 @@ CREATE TABLE `education` (
   `attainments` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `education`
+--
+
+INSERT INTO `education` (`education_ID`, `user_ID`, `educational_level`, `campus_name`, `school_year`, `attainments`) VALUES
+(9, 1, 'High School', 'Canossa Academy', '(2014 - 2018)', 'Graduated as an achiever and as an active member of the Math Honor\'s Society, Chess, and Taekwondo Club.'),
+(10, 1, 'Senior High School', 'APEC Schools Lipa City', '(2019 - 2021)', 'Graduated with Excellence and Merit awards'),
+(11, 1, 'Bachelor of Science in Computer Science', 'National University Lipa City', '(2022 - Present)', 'Made the Dean\'s List for 3 terms.');
+
 -- --------------------------------------------------------
 
 --
@@ -61,9 +70,17 @@ CREATE TABLE `projects` (
   `projects_ID` int(11) NOT NULL,
   `user_ID` int(11) DEFAULT NULL,
   `project_title` varchar(255) NOT NULL,
-  `project_description` varchar(255) NOT NULL,
-  `project_phot` longblob NOT NULL
+  `project_description` text NOT NULL,
+  `project_photo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`projects_ID`, `user_ID`, `project_title`, `project_description`, `project_photo`) VALUES
+(6, 1, 'LAYA (Legal Aid at Your Access)', 'An AI chatbot designed to address all your inquiries and needs related to Philippine laws. This advanced virtual assistant provides comprehensive and accurate information, helping you navigate legal questions, understand regulations, and stay informed about legal matters specific to the Philippines.', 'Project-1.png'),
+(7, 1, 'iPaws', 'A comprehensive pet tracker app that enables you to connect with fellow pet owners, locate the nearest veterinary services, and monitor your pet&#039;s daily activities and needs.', 'Project-2.png');
 
 -- --------------------------------------------------------
 
@@ -75,8 +92,18 @@ CREATE TABLE `skills` (
   `skills_ID` int(11) NOT NULL,
   `user_ID` int(11) DEFAULT NULL,
   `skill_name` varchar(255) NOT NULL,
-  `skill_description` varchar(255) NOT NULL
+  `skill_description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `skills`
+--
+
+INSERT INTO `skills` (`skills_ID`, `user_ID`, `skill_name`, `skill_description`) VALUES
+(7, 1, 'Time Management', 'I excel in time management, effectively prioritizing tasks and meeting deadlines consistently. I organize my workload to maximize productivity and ensure timely completion of projects, all while balancing multiple responsibilities with ease.'),
+(13, 1, 'Quick Learner', 'I have a strong ability to rapidly grasp new concepts and technologies. I adapt quickly to changing environments and integrate new knowledge into practical applications, which enhances my efficiency and performance in various tasks and projects.'),
+(14, 1, 'Web Design', 'I am proficient in web design, utilizing HTML, CSS, PHP, and MySQL to create visually appealing and functional websites. I develop responsive web pages, implement server-side scripting, and manage databases to deliver seamless user experiences and robust backend functionalities.'),
+(15, 1, 'Coding', 'I have an extensive experience with Java and Python, leveraging these languages to develop efficient and scalable software solutions. I write clean, well-documented code and solve complex problems through innovative programming techniques and practices.');
 
 -- --------------------------------------------------------
 
@@ -86,15 +113,16 @@ CREATE TABLE `skills` (
 
 CREATE TABLE `users` (
   `user_ID` int(11) NOT NULL,
-  `user_name` varchar(255) NOT NULL
+  `user_name` varchar(255) NOT NULL,
+  `user_password` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_ID`, `user_name`) VALUES
-(1, 'JM_Reyes');
+INSERT INTO `users` (`user_ID`, `user_name`, `user_password`) VALUES
+(1, 'JM', 'password');
 
 --
 -- Indexes for dumped tables
@@ -148,19 +176,19 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `education`
 --
 ALTER TABLE `education`
-  MODIFY `education_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `education_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `projects_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `projects_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `skills_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `skills_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
