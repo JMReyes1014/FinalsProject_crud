@@ -1,12 +1,9 @@
 <?php 
-
-if (!isset($_SESSION['user_name'])) {
-    header("Location: login.php");
-    exit();
-}
-
+// inlcudes connection to database
     include('connect.php');
 
+
+// Logic Respoinsible for deleting skill
     if(isset($_GET['deleteid'])) {
         $id = $_GET['deleteid'];
 
@@ -20,6 +17,7 @@ if (!isset($_SESSION['user_name'])) {
         }
     }
 
+// Logic Respoinsible for deleting education
     if(isset($_GET['delete-educationid'])) {
         $id = $_GET['delete-educationid'];
 
@@ -33,4 +31,13 @@ if (!isset($_SESSION['user_name'])) {
         }
     }
 
+// Logic responsible for deleting project
+
+
+
+// Checks if a user is logged in 
+if (!isset($_SESSION['user_name'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>

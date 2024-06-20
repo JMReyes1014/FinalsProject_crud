@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
@@ -7,6 +8,73 @@ if (!isset($_SESSION['user_name'])) {
     exit();
 }
 
+$alertScript = ""; // Initialize an empty script variable
+
+// Retrieve skill information for the given ID
+if (isset($_GET['update-skillid'])) {
+    $id = $_GET['update-skillid'];
+    $sql = "SELECT * FROM `skills` WHERE skills_ID = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $dis_name = $row['skill_name'];
+    $dis_desc = $row['skill_description'];
+    $stmt->close();
+}
+
+// Update skill information
+if (isset($_POST['update'])) {
+    $id = $_POST['id'];
+    $name = $_POST['skill_name'];
+    $desc = $_POST['skill_desc'];
+
+    // Prepared statement to prevent SQL injection
+    $stmt = $con->prepare("UPDATE `skills` SET skill_name = ?, skill_description = ? WHERE skills_ID = ?");
+    $stmt->bind_param("ssi", $name, $desc, $id);
+
+    if ($stmt->execute()) {
+        $alertScript = '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "success",
+                    title: "Skill Updated Successfully",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#4CAF50",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#4CAF50"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "settings.php?update-skillid='.$id.'";
+                    }
+                });
+            });
+        </script>';
+    } else {
+        $alertScript = '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to update skill: ' . $stmt->error . '",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#f44336",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#f44336"
+                });
+            });
+        </script>';
+    }
+
+    $stmt->close();
+}
+
+$con->close();
 ?>
 
 <!DOCTYPE html>
@@ -74,37 +142,29 @@ if (!isset($_SESSION['user_name'])) {
 
     <!-- MAIN SECTION -->
     <section id="settings" class="full-height px-lg-5">
-
-
         <div class="container mt-5 p-md-4">
-
             <div class="go-back">
                 <a href="settings.php" class="button-27">Go back</a>
             </div>
-
             <div class="col-lg-12 edit-main my-3">
                 <div class="row-lg-7">
-
                     <div class="col">
                         <h4 style="font-size: 60px; text-align: center; margin-bottom: 30px;">Edit Skill</h4>
                     </div>
-
-                    <form action="">
+                    <form method="post" action="">
+                        <input type="hidden" name="id" value="<?php echo $id; ?>" />
                         <div>
-                            <input type="text" class="form-control my-3" placeholder="Current skill name" />
+                            <input type="text" name="skill_name" class="form-control my-3" value="<?php echo $dis_name ?>" />
                         </div>
-
                         <div>
-                            <textarea name="" id="" rows="4" class="form-control my-3"
-                                placeholder="Current skill description"></textarea>
+                            <textarea name="skill_desc" rows="4" class="form-control my-3"><?php echo $dis_desc ?></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="button-27 btn-add" style="background-color: #000000;">
+                            <button type="submit" name="update" class="button-27 btn-add" style="background-color: #000000;">
                                 Edit Skill
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -136,14 +196,15 @@ if (!isset($_SESSION['user_name'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
     <!-- Animation on scroll cdn js -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Initialize AOS -->
     <script>
         AOS.init();
     </script>
-    <!-- main.js -->
-    <script src="./js/main.js"></script>
+    <!-- SweetAlert2 cdn js -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <?php echo $alertScript; ?>
 </body>
 
 </html>

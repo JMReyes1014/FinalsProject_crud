@@ -13,11 +13,12 @@ if (isset($_POST['submit'])) {
     $name = $_POST['skill_name'];
     $desc = $_POST['skill_desc'];
 
-    // Use prepared statements to prevent SQL injection
+  // Prepared statements to prevent SQL injection
     $stmt = $con->prepare("INSERT INTO `skills` (user_ID, skill_name, skill_description) VALUES (?, ?, ?)");
     $userID = 1; // Assuming user_ID is 1 for now. This should be dynamically set according to the logged-in user.
     $stmt->bind_param("iss", $userID, $name, $desc);
 
+    // Sweet alert
     if ($stmt->execute()) {
         echo '
         <script>
@@ -150,6 +151,7 @@ $con->close();
             <h4 style="font-size: 40px">Add Skills</h4>
           </div>
 
+        <!-- FORM TO ACCEPT INPUT -->
           <div class="container">
             <form method="post">
               <div class="form-group col-lg-12 my-lg-4 my-4">

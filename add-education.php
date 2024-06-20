@@ -14,11 +14,12 @@ if (isset($_POST['submit'])) {
     $year = $_POST['education_years'];
     $att = $_POST['education_attainments'];
 
-    // Use prepared statements to prevent SQL injection
+    // Prepared statements to prevent SQL injection
     $stmt = $con->prepare("INSERT INTO `education` (user_ID, educational_level, campus_name, school_year, attainments) VALUES (?, ?, ?, ?, ?)");
     $userID = 1; // Assuming user_ID is 1 for now. This should be dynamically set according to the logged-in user.
     $stmt->bind_param("issss", $userID, $level, $name, $year, $att);
 
+    //SWEET ALERT
     if ($stmt->execute()) {
       echo '
       <script>
@@ -151,6 +152,7 @@ $con->close();
             <h4 style="font-size: 40px">Add Education</h4>
           </div>
 
+        <!-- FORM TO ACCEPT INPUT -->
           <div class="container">
             <form method="post">
               <div class="form-group col-lg-12 my-lg-4">

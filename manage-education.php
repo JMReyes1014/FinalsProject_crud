@@ -128,7 +128,7 @@ if (!isset($_SESSION['user_name'])) {
                       <tr>
                         <td class="td-title">'.$title.'</td>
                         <td class="edit-del">
-                          <form action="edit-skills.php" method="post">
+                          <form action="edit-education.php?update-educationid='.$id.'" method="post">
                             <input type="hidden" name="id" value="'.$id.'">
                             <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\''.$confirm_edit.'\')">Edit</button>
                           </form>
@@ -147,22 +147,6 @@ if (!isset($_SESSION['user_name'])) {
                 
                 ?>
 
-
-                <!-- <tr>
-                  <td class="td-title">Canossa Academy Lipa</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
-                  <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                </tr>
-                <tr>
-                  <td class="td-title">APEC Schools Lipa</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
-                  <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                </tr>
-                <tr>
-                  <td class="td-title">National University Lipa</td>
-                  <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
-                  <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                </tr> -->
               </tbody>
             </table>
           </div>

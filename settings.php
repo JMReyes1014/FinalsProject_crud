@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_name'])) {
     exit();
 }
 
+// Sweet alert if login is success
 if (isset($_SESSION['login_success'])) {
   echo '
   <script>
@@ -132,11 +133,13 @@ if (isset($_SESSION['login_success'])) {
                 </thead>
                 <tbody>
 
+            <!-- TABLE BODY -->
                 <?php 
                 
                   $confirm_edit = 'Are you sure you want to edit this skill?';
                   $confirm_del = 'Are you sure you want to delete this skill?';
 
+                  // PREPARES AND EXECUTES SQL QUERY
                   $sql = "SELECT * FROM `skills`";
                   $result = mysqli_query($con, $sql);
                   if($result) {
@@ -148,7 +151,7 @@ if (isset($_SESSION['login_success'])) {
                       <tr>
                         <td class="td-title">'.$title.'</td>
                         <td class="edit-del">
-                          <form action="edit-skills.php" method="post">
+                          <form action="edit-skills.php?update-skillid='.$id.'" method="post">
                             <input type="hidden" name="id" value="'.$id.'">
                             <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\''.$confirm_edit.'\')">Edit</button>
                           </form>
@@ -166,27 +169,7 @@ if (isset($_SESSION['login_success'])) {
                   }
                 
                 ?>
-
-                  <!-- <tr>
-                    <td class="td-title">Time Management</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
-                    <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td class="td-title">Quick Learner</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
-                    <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td class="td-title">Web Design</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
-                    <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                  </tr>
-                  <tr>
-                    <td class="td-title">Coding</td>
-                    <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
-                    <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                  </tr> -->
+                
                 </tbody>
               </table>
             </div>
