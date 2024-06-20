@@ -1,32 +1,5 @@
 <?php
-session_start();
 include('connect.php');
-
-// Check if the user is logged in
-if (!isset($_SESSION['user_name'])) {
-    header("Location: login.php");
-    exit();
-}
-
-// Sweet alert if login is success
-if (isset($_SESSION['login_success'])) {
-  echo '
-  <script>
-      document.addEventListener("DOMContentLoaded", function() {
-          Swal.fire({
-              icon: "success",
-              title: "Login Successful",
-              text: "Welcome to the settings page!",
-              confirmButtonText: "OK",
-              confirmButtonColor: "#ef4f4f",
-              background: "#0e0d0d",
-              color: "#fff",
-              iconColor: "#ef4f4f"
-          });
-      });
-  </script>';
-  unset($_SESSION['login_success']);
-}
 ?>
 
 <!DOCTYPE html>
@@ -73,19 +46,13 @@ if (isset($_SESSION['login_success'])) {
             <a class="nav-link" aria-current="page" href="index.php#about">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="index.php#projects">Projects</a>
+            <a class="nav-link active" aria-current="page" href="index.php#projects">Projects</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link cog-active active" style="pointer-events: none;" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
-          </li> 
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></i></a>
+            <a class="nav-link" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
           </li>
         </ul>
       </div>

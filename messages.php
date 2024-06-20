@@ -79,10 +79,10 @@ if (isset($_SESSION['login_success'])) {
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link cog-active active" style="pointer-events: none;" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+            <a class="nav-link" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
+            <a class="nav-link cog-active active" style="pointer-events: none;" aria-current="page" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
           </li> 
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></i></a>
