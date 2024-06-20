@@ -196,22 +196,46 @@ include ('connect.php');
       <!-- PROJECT CARDS -->
       <div class="row gy-4">
 
-        <div class="col-md-6" data-aos="fade-up">
-          <div class="card-custom rounded-4 bg-base shadow-effect">
-            <div class="card-custom-image rounded-4">
-              <img class="rounded-4" src="./assets/images/Project-1.png" alt="">
-            </div>
-            <div class="card-custom-content p-4">
-              <h4 class="header-brand">LAYA (Legal Aid at Your Access)</h4>
-              <p>
-                An AI chatbot designed to address all your inquiries and needs related to Philippine laws. This advanced
-                virtual assistant provides comprehensive and accurate information, helping you navigate legal questions,
-                understand regulations, and stay informed about legal matters specific to the Philippines.</p>
-              <a href="" class="link-custom">Read More</a>
-            </div>
-          </div>
-        </div>
 
+      <?php
+        $sql = "SELECT * FROM `projects`";
+        $result = mysqli_query($con, $sql);
+
+        if ($result) {
+
+          $counter = 0; // Initialize counter
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $proj_title = $row['project_title'];
+                $proj_desc = $row['project_description'];
+                $photo = $row['project_photo']; // Assuming it stores the image path or URL
+                $delay = $counter * 300; // Calculate delay in milliseconds
+                echo '
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="' . $delay . '">
+                    <div class="card-custom rounded-4 bg-base shadow-effect">
+                        <div class="card-custom-image rounded-4">
+                            <img class="rounded-4" src="uploads/'.$photo.'" alt="'.$proj_title.'">
+                        </div>
+                        <div class="card-custom-content p-4">
+                            <h4 class="header-brand">'.$proj_title.'</h4>
+                            <p>'.$proj_desc.'</p>
+                            <a href="#" class="link-custom">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                ';
+
+                $counter++; // Increment counter for next skill
+            
+                // Reset counter after every 2 iterations
+                if ($counter == 2) {
+                  $counter = 0;
+                }
+
+            }
+        }
+      ?>
+    <!--
         <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
           <div class="card-custom rounded-4 bg-base shadow-effect">
             <div class="card-custom-image rounded-4">
@@ -224,7 +248,7 @@ include ('connect.php');
               <a href="" class="link-custom">Read More</a>
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
 

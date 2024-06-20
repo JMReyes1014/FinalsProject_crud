@@ -1,13 +1,94 @@
 <?php
 session_start();
+include ('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
+if (isset($_POST['submit'])) {
+  $title = htmlspecialchars(trim($_POST['title']));
+  $desc = htmlspecialchars(trim($_POST['description']));
+  $photo = $_FILES['photo']['name'];
+  $tempname = $_FILES['photo']['tmp_name'];
+  $folder = 'uploads/' . $photo;
+
+  // Ensure photo upload directory exists
+  if (!is_dir('uploads')) {
+    mkdir('uploads', 0777, true);
+  }
+
+  // Move the uploaded file to the server directory
+  if (move_uploaded_file($tempname, $folder)) {
+    // Use session user_ID
+    $userID = $_SESSION['user_ID'];
+
+    // Prepared statements to prevent SQL injection
+    $stmt = $con->prepare("INSERT INTO `projects` (user_ID, project_title, project_description, project_photo) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("isss", $userID, $title, $desc, $photo);
+
+    // Sweet alert
+    if ($stmt->execute()) {
+      echo '
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Project Added Successfully",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#4CAF50",
+                        background: "#0e0d0d",
+                        color: "#fff",
+                        iconColor: "#4CAF50"
+                    }).then(function() {
+                        window.location = "manage-projects.php";
+                    });
+                });
+            </script>';
+    } else {
+      echo '
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Failed to add project: ' . $stmt->error . '",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#f44336",
+                        background: "#0e0d0d",
+                        color: "#fff",
+                        iconColor: "#f44336"
+                    });
+                });
+            </script>';
+    }
+
+    $stmt->close();
+  } else {
+    echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to upload photo",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#f44336",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#f44336"
+                });
+            });
+        </script>';
+  }
+}
+
+$con->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,8 +110,7 @@ if (!isset($_SESSION['user_name'])) {
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="icon" href="./assets/images/cat-icon.png">
   <!-- MATERIAL ICONS LINK -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>JM Reyes | Webpage</title>
 </head>
 
@@ -60,13 +140,14 @@ if (!isset($_SESSION['user_name'])) {
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+            <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page"
+              href="settings.php"><i class="las la-cog"></i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></i></a>
+            <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></a>
           </li>
         </ul>
       </div>
@@ -76,80 +157,74 @@ if (!isset($_SESSION['user_name'])) {
   <section id="settings" class="full-height px-lg-5">
     <div class="container settings-container mt-5 p-md-4">
 
-        <div class="row-lg-3 settings-nav">
-            <a class="settings-option" href="settings.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Skills</span>
-            </a>
-            <a class="settings-option" href="manage-education.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Education</span>
-            </a>
-            <a class="settings-option" href="manage-projects.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Projects</span>
-            </a>
-            <a class="settings-option" href="add-skills.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Skills</span>
-            </a>
-            <a class="settings-option" href="add-education.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Education</span>
-            </a>
-            <a class="settings-option settings-active" href="add-project.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Project</span>
-            </a>    
+      <div class="row-lg-3 settings-nav">
+        <a class="settings-option" href="settings.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Manage Skills</span>
+        </a>
+        <a class="settings-option" href="manage-education.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Manage Education</span>
+        </a>
+        <a class="settings-option" href="manage-projects.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Manage Projects</span>
+        </a>
+        <a class="settings-option" href="add-skills.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Add Skills</span>
+        </a>
+        <a class="settings-option" href="add-education.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Add Education</span>
+        </a>
+        <a class="settings-option settings-active" href="add-project.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Add Project</span>
+        </a>
+      </div>
+
+      <div class="row-lg-7 settings-main">
+        <div class="col">
+          <h4 style="font-size: 40px">Add Project</h4>
         </div>
 
-        <div class="row-lg-7 settings-main">
-          <div class="col">
-            <h4 style="font-size: 40px">Add Project</h4>
-          </div>
-
-          <div class="container">
-            <form action="">
-              <div class="form-group col-lg-12 my-4">
-                <input type="text" class="form-control" placeholder="Enter campus name">
-              </div>
-              <div class="form-group col-lg-12 my-4">
-                <input type="text" class="form-control" placeholder="Enter school years">
-              </div>
-              <div class="form-group col-lg-12 my-4">
-                <label for="" class="mt-lg-0 mb-lg-2">Upload project picture</label>
-                <input type="file" name="" id="file" accept="image/jpeg, image/png">
-                <label class="upload-file-lbl" for="file">
-                  <i class="material-icons">add_photo_alternate</i> &nbsp;
-                  Choose a Photo
-                </label>
-              </div>
-              
-              <div class="form-group" style="margin-top: 80px;">
-                <button type="submit" class="button-27 btn-add">
-                  Add Project
-                </button>
-              </div>    
-
-            </form>
-          </div>
-
+        <div class="container">
+        <form method="post" enctype="multipart/form-data">
+  <div class="form-group col-lg-12 my-4">
+    <input type="text" class="form-control" name="title" placeholder="Enter project title" required>
+  </div>
+  <div class="form-group col-lg-12 my-4">
+  <textarea class="form-control" rows="3" name="description" placeholder="Enter project description" autocomplete="off"></textarea>
+  </div>
+  
+  <div class="form-group col-lg-12 my-4 d-flex align-items-center">
+    <div class="col-lg-6">
+      <label for="file" class="mt-lg-0 mb-lg-2">Upload project picture</label>
+      <input type="file" name="photo" id="file" accept="image/jpeg, image/png" required onchange="previewFile()">
+      <label class="upload-file-lbl" for="file">
+        <i class="material-icons">add_photo_alternate</i> &nbsp;
+        Choose a Photo
+      </label>
+    </div>
+    <div id="preview" class="col-lg-6 ms-3">
+      <img id="previewImage" src="#" alt="Image Preview" style="margin-left: -100px; margin-bottom: -50px; display: none; max-height: 200px; max-width: 300px;">
+    </div>
+  </div>
+  
+  <div class="form-group" style="margin-top: 80px;">
+    <button type="submit" name="submit" class="button-27 btn-add">
+      Add Project
+    </button>
+  </div>    
+</form>
         </div>
+
+      </div>
 
     </div>
   </section>
 
-   <!-- FOOTER -->
-    <footer class="py-5 p-lg-3">
-      <div class="container">
-        <div class="row gy-4 justify-content-between">
-          <div class="col-auto">
-            <p class="mb-0 mt-2">JM REYES @ 2024 || Finals Project in Advanced Database System</p>
-          </div>
-          <div class="col-auto">
-            <div class="social-icons">
-              <a href="https://www.facebook.com/KuddliestDudeYouHaveEverKnown" target="_blank"><i class="lab la-facebook"></i></a>
-              <a href="https://www.instagram.com/itzjmbruhhh/" target="_blank"><i class="lab la-instagram"></i></a>
-              <a href="https://github.com/JMReyes1014" target="_blank"><i class="lab la-github"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+  <!-- FOOTER -->
+  <footer class="py-5 p-lg-3">
+    <div class="container">
+      <p>Copyright © 2023 JM Reyes</p>
+    </div>
+  </footer>
 
   <!-- Bootstrap cdn js -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -160,6 +235,29 @@ if (!isset($_SESSION['user_name'])) {
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init();
+  </script>
+  <!-- Sweet alert script -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- JavaScript to preview image -->
+  <script>
+    function previewFile() {
+      const file = document.querySelector('input[type=file]').files[0];
+      const preview = document.getElementById('previewImage');
+      const fileName = document.getElementById('fileName');
+
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        preview.src = reader.result;
+        preview.style.display = 'block';
+      }, false);
+
+      if (file) {
+        reader.readAsDataURL(file);
+        fileName.textContent = 'File Name: ' + file.name;
+      }
+    }
   </script>
   <!-- main.js -->
   <script src="./js/main.js"></script>
