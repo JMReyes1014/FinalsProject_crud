@@ -34,7 +34,19 @@
     }
 
 // Logic responsible for deleting project
+if(isset($_GET['delete-projectid'])) {
+    $id = $_GET['delete-projectid'];
 
+    $sql = "DELETE FROM `projects` WHERE projects_ID = $id";
+    $result = mysqli_query($con, $sql);
+
+    if(!$result) {
+        die(mysqli_error($con));
+    } else {
+        header('location: manage-projects.php');
+        exit();
+    }
+}
 
 
 // Checks if a user is logged in 

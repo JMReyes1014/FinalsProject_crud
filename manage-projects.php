@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
@@ -107,7 +108,44 @@ if (!isset($_SESSION['user_name'])) {
               </tr>
             </thead>
             <tbody>
-              <tr>
+
+            <?php 
+                
+                  $confirm_edit = 'Are you sure you want to edit this project?';
+                  $confirm_del = 'Are you sure you want to delete this project?';
+
+                  $sql = "SELECT * FROM `projects`";
+                  $result = mysqli_query($con, $sql);
+                  if($result) {
+
+                    while($row = mysqli_fetch_assoc($result)) {
+                      $id = $row['projects_ID'];
+                      $title = $row['project_title'];
+                      echo '
+                      <tr>
+                        <td class="td-title">'.$title.'</td>
+                        <td class="edit-del">
+                          <form action="edit-projects.php?update-projectid='.$id.'" method="post">
+                            <input type="hidden" name="id" value="'.$id.'">
+                            <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\''.$confirm_edit.'\')">Edit</button>
+                          </form>
+                        </td>
+                        <td class="edit-del">
+                          <form method="post">
+                            <input type="hidden" name="id" value="'.$id.'">
+                            <a type="submit" href="delete.php?delete-projectid='.$id.'" name="delete" class="btn sm btn-danger btn-size" onclick="return confirm(\''.$confirm_del.'\')">Delete</a>
+                          </form>
+                        </td>
+                      </tr>
+                      ';
+                    }
+                    
+                  }
+                
+                ?>
+
+
+              <!-- <tr>
                 <td class="td-title">LAYA (Legal Aid at Your Access)</td>
                 <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-projects.php">Edit</a></td>
                 <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
@@ -116,7 +154,7 @@ if (!isset($_SESSION['user_name'])) {
                 <td class="td-title">iPaws</td>
                 <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-projects.php">Edit</a></td>
                 <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
