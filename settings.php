@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
@@ -43,7 +44,7 @@ if (isset($_SESSION['login_success'])) {
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
   <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-    <!-- Include SweetAlert2 CSS -->
+  <!-- Include SweetAlert2 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <!-- STYLE.CSS LINK -->
   <link rel="stylesheet" href="./assets/css/style.css">
@@ -124,13 +125,49 @@ if (isset($_SESSION['login_success'])) {
               <table>
                 <thead>
                   <tr>
-                    <th>Title</th>
+                    <th>Skill</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+
+                <?php 
+                
+                  $confirm_edit = 'Are you sure you want to edit this skill?';
+                  $confirm_del = 'Are you sure you want to delete this skill?';
+
+                  $sql = "SELECT * FROM `skills`";
+                  $result = mysqli_query($con, $sql);
+                  if($result) {
+
+                    while($row = mysqli_fetch_assoc($result)) {
+                      $id = $row['skills_ID'];
+                      $title = $row['skill_name'];
+                      echo '
+                      <tr>
+                        <td class="td-title">'.$title.'</td>
+                        <td class="edit-del">
+                          <form action="edit-skills.php" method="post">
+                            <input type="hidden" name="id" value="'.$id.'">
+                            <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\''.$confirm_edit.'\')">Edit</button>
+                          </form>
+                        </td>
+                        <td class="edit-del">
+                          <form method="post">
+                            <input type="hidden" name="id" value="'.$id.'">
+                            <a type="submit" href="delete.php?deleteid='.$id.'" name="delete" class="btn sm btn-danger btn-size" onclick="return confirm(\''.$confirm_del.'\')">Delete</a>
+                          </form>
+                        </td>
+                      </tr>
+                      ';
+                    }
+                    
+                  }
+                
+                ?>
+
+                  <!-- <tr>
                     <td class="td-title">Time Management</td>
                     <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
                     <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
@@ -149,7 +186,7 @@ if (isset($_SESSION['login_success'])) {
                     <td class="td-title">Coding</td>
                     <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-skills.php">Edit</a></td>
                     <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>

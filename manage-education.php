@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
@@ -110,7 +111,44 @@ if (!isset($_SESSION['user_name'])) {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+
+              <?php 
+                
+                  $confirm_edit = 'Are you sure you want to edit this education?';
+                  $confirm_del = 'Are you sure you want to delete this education?';
+
+                  $sql = "SELECT * FROM `education`";
+                  $result = mysqli_query($con, $sql);
+                  if($result) {
+
+                    while($row = mysqli_fetch_assoc($result)) {
+                      $id = $row['education_ID'];
+                      $title = $row['campus_name'];
+                      echo '
+                      <tr>
+                        <td class="td-title">'.$title.'</td>
+                        <td class="edit-del">
+                          <form action="edit-skills.php" method="post">
+                            <input type="hidden" name="id" value="'.$id.'">
+                            <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\''.$confirm_edit.'\')">Edit</button>
+                          </form>
+                        </td>
+                        <td class="edit-del">
+                          <form method="post">
+                            <input type="hidden" name="id" value="'.$id.'">
+                            <a type="submit" href="delete.php?delete-educationid='.$id.'" name="delete" class="btn sm btn-danger btn-size" onclick="return confirm(\''.$confirm_del.'\')">Delete</a>
+                          </form>
+                        </td>
+                      </tr>
+                      ';
+                    }
+                    
+                  }
+                
+                ?>
+
+
+                <!-- <tr>
                   <td class="td-title">Canossa Academy Lipa</td>
                   <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
                   <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
@@ -124,7 +162,7 @@ if (!isset($_SESSION['user_name'])) {
                   <td class="td-title">National University Lipa</td>
                   <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-education.php">Edit</a></td>
                   <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>

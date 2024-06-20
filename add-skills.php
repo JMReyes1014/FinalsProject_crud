@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
@@ -7,6 +8,53 @@ if (!isset($_SESSION['user_name'])) {
     exit();
 }
 
+
+if (isset($_POST['submit'])) {
+    $name = $_POST['skill_name'];
+    $desc = $_POST['skill_desc'];
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = $con->prepare("INSERT INTO `skills` (user_ID, skill_name, skill_description) VALUES (?, ?, ?)");
+    $userID = 1; // Assuming user_ID is 1 for now. This should be dynamically set according to the logged-in user.
+    $stmt->bind_param("iss", $userID, $name, $desc);
+
+    if ($stmt->execute()) {
+        echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "success",
+                    title: "Skill Added Successfully",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#4CAF50",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#4CAF50"
+                });
+            });
+        </script>';
+    } else {
+        echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to add skill: ' . $stmt->error . '",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#f44336",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#f44336"
+                });
+            });
+        </script>';
+    }
+
+    $stmt->close();
+}
+
+$con->close();
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +73,8 @@ if (!isset($_SESSION['user_name'])) {
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
   <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <!-- Include SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <!-- STYLE.CSS LINK -->
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="icon" href="./assets/images/cat-icon.png">
@@ -101,15 +151,15 @@ if (!isset($_SESSION['user_name'])) {
           </div>
 
           <div class="container">
-            <form action="">
+            <form method="post">
               <div class="form-group col-lg-12 my-lg-4 my-4">
-                <input type="text" class="form-control" placeholder="Enter skill name">
+                <input type="text" class="form-control" placeholder="Enter skill name" name="skill_name">
               </div>
               <div class="form-group col-lg-12 my-lg-4 my-4">
-                <textarea class="form-control" rows="5" placeholder="Enter skill description" name="" id=""></textarea>
+                <textarea class="form-control" rows="5" placeholder="Enter skill description" name="skill_desc" id=""></textarea>
               </div>     
               <div class="form-group col-lg-12 my-lg-4 my-4">
-                <button type="submit" class="button-27 btn-add">
+                <button type="submit" name="submit" class="button-27 btn-add">
                   Add Skill
                 </button>
               </div>          
@@ -143,7 +193,8 @@ if (!isset($_SESSION['user_name'])) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-
+  <!-- SWEET ALERT2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script> 
   <!-- Animation on scroll cdn js -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
