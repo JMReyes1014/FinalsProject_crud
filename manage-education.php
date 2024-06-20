@@ -112,11 +112,13 @@ if (!isset($_SESSION['user_name'])) {
               </thead>
               <tbody>
 
+             <!-- TABLE BODY -->
               <?php 
                 
                   $confirm_edit = 'Are you sure you want to edit this education?';
                   $confirm_del = 'Are you sure you want to delete this education?';
 
+                  // Prepares and executes sql query
                   $sql = "SELECT * FROM `education`";
                   $result = mysqli_query($con, $sql);
                   if($result) {

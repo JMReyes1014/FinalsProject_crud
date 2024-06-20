@@ -1,51 +1,59 @@
 <?php 
+session_start(); // Start session to manage user session data
+include "db_conn.php"; // Include file for database connection
 
-session_start();
-include "db_conn.php";
-
+// Check if username and password are submitted via POST
 if(isset($_POST['username']) && isset($_POST['password'])) {
     
+    // Function to sanitize and validate input data
     function validate($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
+        $data = trim($data); // Remove whitespace from beginning and end
+        $data = stripslashes($data); // Remove backslashes
+        $data = htmlspecialchars($data); // Convert special characters to HTML entities
+        return $data; // Return sanitized data
     }
 
+    // Sanitize and validate username and password inputs
     $user = validate($_POST['username']);
     $pass = validate($_POST['password']);
 
+    // Check if username is empty
     if(empty($user)) {
-        header("Location: login.php?error=username is required");
-        exit();
+        header("Location: login.php?error=username is required"); // Redirect with error message
+        exit(); // Stop further script execution
     } else if(empty($pass)) {
-        header("Location: login.php?error=password is required");
-        exit();
+        header("Location: login.php?error=password is required"); // Redirect with error message
+        exit(); // Stop further script execution
     }
 
+    // SQL query to select user with matching username and password
     $sql = "SELECT * FROM users WHERE user_name = '$user' AND user_password = '$pass'";
 
+    // Execute SQL query
     $result = mysqli_query($conn, $sql);
 
+    // Check if exactly one row is returned (indicating valid credentials)
     if(mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
+        $row = mysqli_fetch_assoc($result); // Fetch associative array of the user data
+        // Verify username and password match
         if($row['user_name'] === $user && $row['user_password'] === $pass) {
+            // Set session variables to store user data
             $_SESSION['user_name'] = $row['user_name'];
             $_SESSION['user_ID'] = $row['user_ID'];
-            $_SESSION['login_success'] = true;
-            header("Location: settings.php");
-            exit();
+            $_SESSION['login_success'] = true; // Set login success flag
+            header("Location: settings.php"); // Redirect to settings page
+            exit(); // Stop further script execution
         } else {
-            header("Location: login.php?error=Incorrect username or password");
-            exit();
+            header("Location: login.php?error=Incorrect username or password"); // Redirect with error message
+            exit(); // Stop further script execution
         }
     } else {
-        header("Location: login.php?error=Incorrect username or password");
-        exit();
+        header("Location: login.php?error=Incorrect username or password"); // Redirect with error message
+        exit(); // Stop further script execution
     }
 } else {
-    header("Location: login.php?error=Both fields are required");
-    exit();
+    header("Location: login.php?error=Both fields are required"); // Redirect with error message
+    exit(); // Stop further script execution
 }
 
 ?>

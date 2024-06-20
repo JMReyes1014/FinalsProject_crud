@@ -2,6 +2,7 @@
 session_start();
 include('connect.php');
 
+// Checks if user is logged in
 if (isset($_SESSION['user_name'])) {
   header("Location: settings.php");
   exit();

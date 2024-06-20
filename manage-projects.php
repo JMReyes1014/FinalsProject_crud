@@ -109,11 +109,13 @@ if (!isset($_SESSION['user_name'])) {
             </thead>
             <tbody>
 
+             <!-- TABLE BODY -->
             <?php 
                 
                   $confirm_edit = 'Are you sure you want to edit this project?';
                   $confirm_del = 'Are you sure you want to delete this project?';
-
+                
+                  //Prepares and executes sql query
                   $sql = "SELECT * FROM `projects`";
                   $result = mysqli_query($con, $sql);
                   if($result) {
