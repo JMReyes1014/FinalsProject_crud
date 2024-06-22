@@ -11,3 +11,5 @@ Password: password)
 
 Here is the Entity Relation Diagram of my MySQL Database:
 ![Portfolio drawio](https://github.com/JMReyes1014/FinalsProject_crud/assets/147701292/51aef696-fb68-42b7-9a38-aa30209e0821)
+[ADBMS FINALS SQL MyPortfolio.pdf](https://github.com/user-attachments/files/15936961/ADBMS.FINALS.SQL.MyPortfolio.pdf)
+
