@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2024 at 09:35 PM
+-- Generation Time: Jun 22, 2024 at 08:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,19 @@ CREATE TABLE `contact` (
   `c_message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`contact_ID`, `user_ID`, `c_name`, `c_email`, `c_subject`, `c_message`) VALUES
+(2, 1, 'Jane Dane', 'JaneDane@email.com', 'I want to test your project 2', 'YAYYY'),
+(3, 1, 'das', 'dsa@email.com', 'dasdas', 'dsadas'),
+(4, 1, 'dsadsa', 'dsa@email.com', 'dasdasda', 'dsadas'),
+(5, 1, 'ewq', 'dsa@email.com', 'dasdasdadada', 'dsadsa'),
+(6, 1, 'ewq', 'dsa@email.com', 'dasdasdadada', 'dadsa'),
+(7, 1, 'ewq', 'dsa@email.com', 'dasdasdadada', 'pls work'),
+(8, 1, 'ewqss', 'dsa@email.com', 'dasdasdadadas', 'pls worksss');
+
 -- --------------------------------------------------------
 
 --
@@ -57,7 +70,7 @@ CREATE TABLE `education` (
 
 INSERT INTO `education` (`education_ID`, `user_ID`, `educational_level`, `campus_name`, `school_year`, `attainments`) VALUES
 (9, 1, 'High School', 'Canossa Academy', '(2014 - 2018)', 'Graduated as an achiever and as an active member of the Math Honor\'s Society, Chess, and Taekwondo Club.'),
-(10, 1, 'Senior High School', 'APEC Schools Lipa City', '(2019 - 2021)', 'Graduated with Excellence and Merit awards'),
+(10, 1, 'Senior High School', 'APEC Schools Lipa City', '(2019 - 2021)', 'Graduated with Excellence and Merit awards.'),
 (11, 1, 'Bachelor of Science in Computer Science', 'National University Lipa City', '(2022 - Present)', 'Made the Dean\'s List for 3 terms.');
 
 -- --------------------------------------------------------
@@ -170,7 +183,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `education`
