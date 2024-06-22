@@ -98,6 +98,8 @@ if (!isset($_SESSION['user_name'])) {
                     <ol class="list-group list-group-numbered">
 
                     <?php 
+
+                        $confirm_del = 'Are you sure you want to delete this project?';
                         //Prepares and executes sql query
                         $sql = "SELECT * FROM `contact`";
                         $result = mysqli_query($con, $sql);
@@ -108,11 +110,18 @@ if (!isset($_SESSION['user_name'])) {
                             $name = $row['c_name'];
                             $subject = $row['c_subject'];
                             echo '
-                            
+                          
+
                             <a href="message-content.php?messageid='.$id.'" class="list-group-item d-flex justify-content-between align-items-start">
                               <div class="ms-2 me-auto">
                                   <div class="fw-bold">'.$name.'</div>
                                   '.$subject.'
+                              </div>
+                              <div class="ms-1">
+                                  <form method="post">
+                                      <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                      <button type="submit" name="delete" style="margin-top: 10px;" class="btn btn-danger btn-sm btn-size" onclick="return confirm('.$confirm_del.')">Delete</button>
+                                  </form>
                               </div>
                             </a>
 
