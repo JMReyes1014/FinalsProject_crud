@@ -1,3 +1,32 @@
+<?php
+session_start();
+include('connect.php');
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_name'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$alertScript = ""; // Initialize an empty script variable
+
+// Retrieve education information for the given ID
+if (isset($_GET['messageid'])) {
+    $id = $_GET['messageid'];
+    $sql = "SELECT * FROM `contact` WHERE contact_ID = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $dis_name = $row['c_name'];
+    $dis_email = $row['c_email'];
+    $dis_subject = $row['c_subject'];
+    $dis_content = $row['c_message'];
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

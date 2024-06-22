@@ -1,3 +1,15 @@
+<?php
+session_start();
+include('connect.php');
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_name'])) {
+    header("Location: login.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,48 +96,30 @@
                     class="scrollable-div" tabindex="0">
         
                     <ol class="list-group list-group-numbered">
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
+
+                    <?php 
+                        //Prepares and executes sql query
+                        $sql = "SELECT * FROM `contact`";
+                        $result = mysqli_query($con, $sql);
+                        if($result) {
+
+                          while($row = mysqli_fetch_assoc($result)) {
+                            $name = $row['c_name'];
+                            $subject = $row['c_subject'];
+                            echo '
+                            
+                            <a href="message-content.php?messageid=?" class="list-group-item d-flex justify-content-between align-items-start">
+                              <div class="ms-2 me-auto">
+                                  <div class="fw-bold">'.$name.'</div>
+                                  '.$subject.'
+                              </div>
+                            </a>
+
+                            ';
+                          }
+                        }
+                    ?>
+
                     </ol>
                 </div>
             </div>
