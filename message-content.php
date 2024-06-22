@@ -98,7 +98,7 @@ if (isset($_GET['messageid'])) {
         <div class="container mt-5 p-md-4">
 
             <div class="go-back">
-                <a href="settings.php" class="button-27">Go back</a>
+                <a href="messages.php" class="button-27">Go back</a>
             </div>
         </div>
 
