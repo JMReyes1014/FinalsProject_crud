@@ -1,11 +1,11 @@
 <?php
 session_start();
-include('connect.php');
+include ('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
 // Sweet alert if login is success
@@ -79,11 +79,12 @@ if (isset($_SESSION['login_success'])) {
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link cog-active active" style="pointer-events: none;" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+            <a class="nav-link cog-active active" style="pointer-events: none;" aria-current="page"
+              href="settings.php"><i class="las la-cog"></i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
-          </li> 
+          </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="logout.php"><i class="las la-sign-out-alt"></i></i></a>
           </li>
@@ -95,107 +96,130 @@ if (isset($_SESSION['login_success'])) {
   <section id="settings" class="full-height px-lg-5">
     <div class="container settings-container mt-5 p-md-4">
 
-        <div class="row-lg-3 settings-nav">
-            <a class="settings-option settings-active" href="settings.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Skills</span>
-            </a>
-            <a class="settings-option" href="manage-education.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Education</span>
-            </a>
-            <a class="settings-option" href="manage-projects.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Manage Projects</span>
-            </a>
-            <a class="settings-option" href="add-skills.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Skills</span>
-            </a>
-            <a class="settings-option" href="add-education.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Education</span>
-            </a>
-            <a class="settings-option" href="add-project.php">
-                <span class="py-md-3 m-md-2 oswald-normal">Add Project</span>
-            </a>    
+      <div class="row-lg-3 settings-nav">
+        <a class="settings-option settings-active" href="settings.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Manage Skills</span>
+        </a>
+        <a class="settings-option" href="manage-education.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Manage Education</span>
+        </a>
+        <a class="settings-option" href="manage-projects.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Manage Projects</span>
+        </a>
+        <a class="settings-option" href="add-skills.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Add Skills</span>
+        </a>
+        <a class="settings-option" href="add-education.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Add Education</span>
+        </a>
+        <a class="settings-option" href="add-project.php">
+          <span class="py-md-3 m-md-2 oswald-normal">Add Project</span>
+        </a>
+      </div>
+
+      <div class="row-lg-7 settings-main">
+
+        <div class="col">
+          <h4 style="font-size: 40px">Manage Skills</h4>
         </div>
 
-        <div class="row-lg-7 settings-main">
+        <div>
 
-            <div class="col">
-                <h4 style="font-size: 40px">Manage Skills</h4>
-            </div>
+          <!-- TABLE BODY -->
+          <?php
+          $confirm_edit = 'Are you sure you want to edit this skill?';
+          $confirm_del = 'Are you sure you want to delete this skill?';
 
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Skill Name</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
+          $records_per_page = 6; // Adjust the number of records per page
+          $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+          $offset = ($current_page - 1) * $records_per_page;
 
-            <!-- TABLE BODY -->
-                <?php 
-                
-                  $confirm_edit = 'Are you sure you want to edit this skill?';
-                  $confirm_del = 'Are you sure you want to delete this skill?';
+          // Get the total number of records
+          $sql_count = "SELECT COUNT(*) AS total FROM `skills`";
+          $result_count = mysqli_query($con, $sql_count);
+          $row_count = mysqli_fetch_assoc($result_count);
+          $total_records = $row_count['total'];
 
-                  // PREPARES AND EXECUTES SQL QUERY
-                  $sql = "SELECT * FROM `skills`";
-                  $result = mysqli_query($con, $sql);
-                  if($result) {
+          $total_pages = ceil($total_records / $records_per_page);
 
-                    while($row = mysqli_fetch_assoc($result)) {
-                      $id = $row['skills_ID'];
-                      $title = $row['skill_name'];
-                      echo '
-                      <tr>
-                        <td class="td-title">'.$title.'</td>
-                        <td class="edit-del">
-                          <form action="edit-skills.php?update-skillid='.$id.'" method="post">
-                            <input type="hidden" name="id" value="'.$id.'">
-                            <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\''.$confirm_edit.'\')">Edit</button>
-                          </form>
-                        </td>
-                        <td class="edit-del">
-                          <form method="post">
-                            <input type="hidden" name="id" value="'.$id.'">
-                            <a type="submit" href="delete.php?deleteid='.$id.'" name="delete" class="btn sm btn-danger btn-size" onclick="return confirm(\''.$confirm_del.'\')">Delete</a>
-                          </form>
-                        </td>
-                      </tr>
-                      ';
-                    }
-                    
-                  }
-                
-                ?>
-                
-                </tbody>
-              </table>
-            </div>
+          // Fetch records for the current page
+          $sql = "SELECT * FROM `skills` LIMIT $offset, $records_per_page";
+          $result = mysqli_query($con, $sql);
+
+          if ($result) {
+            echo '<table>';
+            echo '<thead>';
+            echo '<tr><th>Skill Name</th><th>Edit</th><th>Delete</th></tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            while ($row = mysqli_fetch_assoc($result)) {
+              $id = $row['skills_ID'];
+              $title = $row['skill_name'];
+              echo '
+                        <tr>
+                          <td class="td-title">' . $title . '</td>
+                          <td class="edit-del">
+                            <form action="edit-skills.php?update-skillid=' . $id . '" method="post">
+                              <input type="hidden" name="id" value="' . $id . '">
+                              <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\'' . $confirm_edit . '\')">Edit</button>
+                            </form>
+                          </td>
+                          <td class="edit-del">
+                            <form method="post">
+                              <input type="hidden" name="id" value="' . $id . '">
+                              <a type="submit" href="delete.php?deleteid=' . $id . '" name="delete" class="btn sm btn-danger btn-size" onclick="return confirm(\'' . $confirm_del . '\')">Delete</a>
+                            </form>
+                          </td>
+                        </tr>
+                        ';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+
+            // Pagination controls
+            echo '<div class="pagination" style="margin-left: 10px; font-size: 25px;">';
+            if ($current_page > 1) {
+              echo '<a style="margin-right: 20px;" href="?page=' . ($current_page - 1) . '">&laquo; Previous</a>';
+            }
+
+            for ($page = 1; $page <= $total_pages; $page++) {
+              echo '<a style="margin-right: 20px;" href="?page=' . $page . '">' . $page . '</a>';
+            }
+
+            if ($current_page < $total_pages) {
+              echo '<a style="margin-right: 20px;" href="?page=' . ($current_page + 1) . '">Next &raquo;</a>';
+            }
+            echo '</div>';
+          }
+          ?>
 
         </div>
+
+      </div>
 
     </div>
   </section>
 
-   <!-- FOOTER -->
-    <footer class="py-5 p-lg-3">
-      <div class="container">
-        <div class="row gy-4 justify-content-between">
-          <div class="col-auto">
-            <p class="mb-0 mt-2">JM REYES @ 2024 || Finals Project in Advanced Database System</p>
-          </div>
-          <div class="col-auto">
-            <div class="social-icons">
-              <a href="https://www.facebook.com/KuddliestDudeYouHaveEverKnown" target="_blank"><i class="lab la-facebook"></i></a>
-              <a href="https://www.instagram.com/itzjmbruhhh/" target="_blank"><i class="lab la-instagram"></i></a>
-              <a href="https://github.com/JMReyes1014" target="_blank"><i class="lab la-github"></i></a>
-            </div>
+  <!-- FOOTER -->
+  <footer class="py-5 p-lg-3">
+    <div class="container">
+      <div class="row gy-4 justify-content-between">
+        <div class="col-auto">
+          <p class="mb-0 mt-2">JM REYES @ 2024 || Finals Project in Advanced Database System</p>
+        </div>
+        <div class="col-auto">
+          <div class="social-icons">
+            <a href="https://www.facebook.com/KuddliestDudeYouHaveEverKnown" target="_blank"><i
+                class="lab la-facebook"></i></a>
+            <a href="https://www.instagram.com/itzjmbruhhh/" target="_blank"><i class="lab la-instagram"></i></a>
+            <a href="https://github.com/JMReyes1014" target="_blank"><i class="lab la-github"></i></a>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 
   <!-- Bootstrap cdn js -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -205,6 +229,41 @@ if (isset($_SESSION['login_success'])) {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
   <!-- Animation on scroll cdn js -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const paginationLinks = document.querySelectorAll('.pagination a');
+      paginationLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          const page = this.getAttribute('href').split('page=')[1];
+          loadPage(page);
+        });
+      });
+
+      function loadPage(page) {
+        fetch('?page=' + page)
+          .then(response => response.text())
+          .then(html => {
+            const newTbody = new DOMParser().parseFromString(html, 'text/html').querySelector('tbody').innerHTML;
+            document.querySelector('table tbody').innerHTML = newTbody;
+
+            // Update pagination links
+            const newPagination = new DOMParser().parseFromString(html, 'text/html').querySelector('.pagination').innerHTML;
+            document.querySelector('.pagination').innerHTML = newPagination;
+
+            // Re-attach event listeners to the new pagination links
+            const newPaginationLinks = document.querySelectorAll('.pagination a');
+            newPaginationLinks.forEach(link => {
+              link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const page = this.getAttribute('href').split('page=')[1];
+                loadPage(page);
+              });
+            });
+          });
+      }
+    });
+  </script>
   <script>
     AOS.init();
   </script>

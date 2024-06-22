@@ -1,11 +1,11 @@
 <?php
 session_start();
-include('connect.php');
+include ('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
 ?>
@@ -57,7 +57,8 @@ if (!isset($_SESSION['user_name'])) {
             <a class="nav-link" aria-current="page" href="index.php#contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page" href="settings.php"><i class="las la-cog"></i></a>
+            <a class="nav-link active cog-active" style="pointer-events: none;" aria-current="page"
+              href="settings.php"><i class="las la-cog"></i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="messages.php"><i class="las la-envelope"></i></a>
@@ -99,66 +100,78 @@ if (!isset($_SESSION['user_name'])) {
         </div>
 
         <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Project Title</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
 
-             <!-- TABLE BODY -->
-            <?php 
-                
-                  $confirm_edit = 'Are you sure you want to edit this project?';
-                  $confirm_del = 'Are you sure you want to delete this project?';
-                
-                  //Prepares and executes sql query
-                  $sql = "SELECT * FROM `projects`";
-                  $result = mysqli_query($con, $sql);
-                  if($result) {
+          <?php
+          $confirm_edit = 'Are you sure you want to edit this project?';
+          $confirm_del = 'Are you sure you want to delete this project?';
 
-                    while($row = mysqli_fetch_assoc($result)) {
-                      $id = $row['projects_ID'];
-                      $title = $row['project_title'];
-                      echo '
-                      <tr>
-                        <td class="td-title">'.$title.'</td>
-                        <td class="edit-del">
-                          <form action="edit-projects.php?update-projectid='.$id.'" method="post">
-                            <input type="hidden" name="id" value="'.$id.'">
-                            <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\''.$confirm_edit.'\')">Edit</button>
-                          </form>
-                        </td>
-                        <td class="edit-del">
-                          <form method="post">
-                            <input type="hidden" name="id" value="'.$id.'">
-                            <a type="submit" href="delete.php?delete-projectid='.$id.'" name="delete" class="btn sm btn-danger btn-size" onclick="return confirm(\''.$confirm_del.'\')">Delete</a>
-                          </form>
-                        </td>
-                      </tr>
-                      ';
-                    }
-                    
-                  }
-                
-                ?>
+          $records_per_page = 6; // Adjust the number of records per page
+          $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+          $offset = ($current_page - 1) * $records_per_page;
+
+          // Get the total number of records
+          $sql_count = "SELECT COUNT(*) AS total FROM `projects`";
+          $result_count = mysqli_query($con, $sql_count);
+          $row_count = mysqli_fetch_assoc($result_count);
+          $total_records = $row_count['total'];
+
+          $total_pages = ceil($total_records / $records_per_page);
+
+          // Fetch records for the current page
+          $sql = "SELECT * FROM `projects` LIMIT $offset, $records_per_page";
+          $result = mysqli_query($con, $sql);
+
+          if ($result) {
+            echo '<table>';
+            echo '<thead>';
+            echo '<tr><th>Project Title</th><th>Edit</th><th>Delete</th></tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            while ($row = mysqli_fetch_assoc($result)) {
+              $id = $row['projects_ID'];
+              $title = $row['project_title'];
+              echo '
+        <tr>
+          <td class="td-title">' . $title . '</td>
+          <td class="edit-del">
+            <form action="edit-projects.php?update-projectid=' . $id . '" method="post">
+              <input type="hidden" name="id" value="' . $id . '">
+              <button type="submit" name="edit" class="btn sm btn-primary btn-size" onclick="return confirm(\'' . $confirm_edit . '\')">Edit</button>
+            </form>
+          </td>
+          <td class="edit-del">
+            <form method="post">
+              <input type="hidden" name="id" value="' . $id . '">
+              <a type="submit" href="delete.php?delete-projectid=' . $id . '" name="delete" class="btn sm btn-danger btn-size" onclick="return confirm(\'' . $confirm_del . '\')">Delete</a>
+            </form>
+          </td>
+        </tr>
+        ';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+
+            // Pagination controls
+            echo '<div class="pagination" style="margin-left: 10px; font-size: 25px;">';
+            if ($current_page > 1) {
+              echo '<a style="margin-right: 20px;" href="?page=' . ($current_page - 1) . '">&laquo; Previous</a>';
+            }
+
+            for ($page = 1; $page <= $total_pages; $page++) {
+              $active = $page == $current_page ? 'class="active"' : '';
+              echo '<a style="margin-right: 20px;" ' . $active . ' href="?page=' . $page . '">' . $page . '</a>';
+            }
+
+            if ($current_page < $total_pages) {
+              echo '<a style="margin-right: 20px;" href="?page=' . ($current_page + 1) . '">Next &raquo;</a>';
+            }
+            echo '</div>';
+          }
+          ?>
 
 
-              <!-- <tr>
-                <td class="td-title">LAYA (Legal Aid at Your Access)</td>
-                <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-projects.php">Edit</a></td>
-                <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-              </tr>
-              <tr>
-                <td class="td-title">iPaws</td>
-                <td class="edit-del"><a class="btn sm btn-primary btn-size" href="edit-projects.php">Edit</a></td>
-                <td class="edit-del"><a class="btn sm btn-danger btn-size" href="">Delete</a></td>
-              </tr> -->
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
@@ -194,6 +207,41 @@ if (!isset($_SESSION['user_name'])) {
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const paginationLinks = document.querySelectorAll('.pagination a');
+      paginationLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          const page = this.getAttribute('href').split('page=')[1];
+          loadPage(page);
+        });
+      });
+
+      function loadPage(page) {
+        fetch('?page=' + page)
+          .then(response => response.text())
+          .then(html => {
+            const newTbody = new DOMParser().parseFromString(html, 'text/html').querySelector('tbody').innerHTML;
+            document.querySelector('table tbody').innerHTML = newTbody;
+
+            // Update pagination links
+            const newPagination = new DOMParser().parseFromString(html, 'text/html').querySelector('.pagination').innerHTML;
+            document.querySelector('.pagination').innerHTML = newPagination;
+
+            // Re-attach event listeners to the new pagination links
+            const newPaginationLinks = document.querySelectorAll('.pagination a');
+            newPaginationLinks.forEach(link => {
+              link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const page = this.getAttribute('href').split('page=')[1];
+                loadPage(page);
+              });
+            });
+          });
+      }
+    });
   </script>
   <!-- main.js -->
   <script src="./js/main.js"></script>
