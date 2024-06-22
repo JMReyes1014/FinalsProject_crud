@@ -1,7 +1,56 @@
 <?php
+// Include the database connection file
+include('connect.php');
+?>
 
-include ('connect.php');
+<?php
+if (isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $content = $_POST['content'];
 
+    // Prepared statements to prevent SQL injection
+    $stmt = $con->prepare("INSERT INTO contact (user_ID, c_name, c_email, c_subject, c_message) VALUES (?, ?, ?, ?, ?)");
+    $userID = 1; // Assuming user_ID is 1 for now. This should be dynamically set according to the logged-in user.
+    $stmt->bind_param("issss", $userID, $name, $email, $subject, $content);
+
+    // SWEET ALERT
+    if ($stmt->execute()) {
+        echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "success",
+                    title: "Message Sent",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#4CAF50",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#4CAF50"
+                });
+            });
+        </script>';
+    } else {
+        echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to send message: ' . $stmt->error . '",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#f44336",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#f44336"
+                });
+            });
+        </script>';
+    }
+
+    $stmt->close();
+}
 
 ?>
 
@@ -21,6 +70,8 @@ include ('connect.php');
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
   <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <!-- Include SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <!-- STYLE.CSS LINK -->
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="icon" href="./assets/images/cat-icon.png">
@@ -252,22 +303,22 @@ include ('connect.php');
 
         <!-- CONTACT FORM -->
         <div class="col-lg-8">
-          <form action="" class="row g-lg-3 gy-3">
+          <form method="post" class="row g-lg-3 gy-3">
 
             <div class="form-group col-md-6" data-aos="fade-up">
-              <input type="text" class="form-control" placeholder="Enter your name.">
+              <input type="text" name="name" class="form-control" placeholder="Enter your name.">
             </div>
             <div class="form-group col-md-6" data-aos="fade-up" data-aos-delay="200">
-              <input type="email" class="form-control" placeholder="Enter your email.">
+              <input type="email" name="email" class="form-control" placeholder="Enter your email.">
             </div>
             <div class="form-group col-12" data-aos="fade-up" data-aos-delay="400">
-              <input type="text" class="form-control" placeholder="Enter subject.">
+              <input type="text" name="subject" class="form-control" placeholder="Enter subject.">
             </div>
             <div class="form-group col-12" data-aos="fade-up" data-aos-delay="800">
-              <textarea name="" id="" rows="5" class="form-control" placeholder="Enter message."></textarea>
+              <textarea name="content" id="" rows="5" class="form-control" placeholder="Enter message."></textarea>
             </div>
             <div class="form-group col-12" data-aos="fade-up" data-aos-delay="1000">
-              <button type="submit" formaction="#contact" class="button-27 btn-contact">Contact Me</button>
+              <button type="submit" name="submit" formaction="index.php#contact" class="button-27 btn-contact">Contact Me</button>
             </div>
 
           </form>
@@ -318,6 +369,8 @@ include ('connect.php');
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+  <!-- SWEET ALERT2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script> 
   <!-- Animation on scroll cdn js -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
@@ -328,3 +381,7 @@ include ('connect.php');
 </body>
 
 </html>
+
+<?php
+$con->close();
+?>
