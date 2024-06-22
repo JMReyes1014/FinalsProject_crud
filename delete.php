@@ -48,6 +48,21 @@ if(isset($_GET['delete-projectid'])) {
     }
 }
 
+// Logic responsible for deleting project
+if(isset($_GET['delete-messageid'])) {
+    $id = $_GET['delete-messageid'];
+
+    $sql = "DELETE FROM `contact` WHERE contact_ID = $id";
+    $result = mysqli_query($con, $sql);
+
+    if(!$result) {
+        die(mysqli_error($con));
+    } else {
+        header('location: messages.php');
+        exit();
+    }
+}
+
 
 // Checks if a user is logged in 
 if (!isset($_SESSION['user_name'])) {
