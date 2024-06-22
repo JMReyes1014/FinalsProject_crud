@@ -73,62 +73,26 @@
             </div>
         </div>
 
-        <div class="col-12">
-            <h4 style="font-size: 60px; text-align: center; margin-bottom: 30px;">Messages</h4>
-        </div>
+        <div class="d-flex justify-content-center message-content-control">
 
         <div class="d-flex justify-content-center" style="margin-left: 250px; margin-right: 250px;">
-
-            <div class="col-12">
-                <div data-bs-spy="scroll" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
-                    class="scrollable-div" tabindex="0">
-        
-                    <ol class="list-group list-group-numbered">
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                        <a href="message-content.php" class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Name of contact</div>
-                                Message
-                            </div>
-                        </a>
-                    </ol>
+            <div class="message-control">
+                
+                <div>
+                    <h4 style="font-size: 20px; margin: 30px; margin-bottom: 0; color: #ef4f4f;">From: Contact Name (contact@email.com)</h4>
                 </div>
+
+                <div class="col-12">
+                    <h4 style="font-size: 40px; margin: 30px; margin-top: 10px;">Message Subject</h4>
+                </div>
+
+                <div class="col-12">
+                    <p style="font-size: 30px; margin: 30px; margin-top: 50px;">Message content Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi ratione, reprehenderit dolorum quidem id, tempore aliquam, natus aut quaerat pariatur veritatis adipisci! Architecto alias ducimus natus fuga. Adipisci, aliquid pariatur ullam facere mollitia illo deleniti quibusdam voluptatem at dolorem ipsa itaque asperiores animi ex, tempora accusantium cupiditate aspernatur vero reiciendis! Exercitationem soluta molestias cumque impedit maiores laborum accusantium incidunt dolorum inventore quae id voluptatem nobis, iure corporis fugiat reiciendis delectus. Autem hic officia, ipsum accusamus nostrum nisi error dolor odio? Quam perferendis eaque dolor minima quaerat culpa, itaque rerum consectetur quidem nisi id corrupti. Neque provident eaque facilis iure unde.</p>
+                </div>
+
             </div>
+        </div>
+        </div>
 
     </section>
 

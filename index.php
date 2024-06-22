@@ -219,7 +219,6 @@ include ('connect.php');
                         <div class="card-custom-content p-4">
                             <h4 class="header-brand">'.$proj_title.'</h4>
                             <p>'.$proj_desc.'</p>
-                            <a href="projectpage.php" class="link-custom">Read More</a>
                         </div>
                     </div>
                 </div>

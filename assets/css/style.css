@@ -518,6 +518,22 @@ input.form-control {
   height: 44px;
 }
 
+.message-control {
+  background-color: var(--color-base1);
+  border-color: var(--color-base1);
+  color: var(--color-body);
+  min-height: auto;
+  min-width: 1400px;
+  border-radius: 10px;
+  padding: 0 20px;
+  text-align: justify;
+}
+
+.message-content-control {
+  margin-left: 250px; 
+  margin-right: 250px;
+}
+
 .form-login {
   display: flex;
   justify-content: center;
@@ -530,6 +546,46 @@ input.form-control {
 textarea {
   resize: none;
 }
+
+
+.list-group-item {
+  background-color: var(--color-base);
+  color: var(--color-body);
+  border: 2px solid var(--color-base2);
+  transition: all 0.4 ease;
+  margin: 0;
+  font-size: larger;
+}
+
+.list-group-item:hover {
+  background-color: var(--color-base1);
+}
+
+/* SCROLLABLE DIV*/
+.scrollable-div {
+  max-height: 500px;
+  overflow-y: auto;
+  border: 20px solid var(--color-base2);
+  border-radius: 10px;
+}
+
+.scrollable-div::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollable-div::-webkit-scrollbar-track {
+  background: var(--color-base1);
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 /* SOCIAL ICONS */
 .social-icons a {
