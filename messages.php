@@ -104,11 +104,12 @@ if (!isset($_SESSION['user_name'])) {
                         if($result) {
 
                           while($row = mysqli_fetch_assoc($result)) {
+                            $id = $row['contact_ID'];
                             $name = $row['c_name'];
                             $subject = $row['c_subject'];
                             echo '
                             
-                            <a href="message-content.php?messageid=?" class="list-group-item d-flex justify-content-between align-items-start">
+                            <a href="message-content.php?messageid='.$id.'" class="list-group-item d-flex justify-content-between align-items-start">
                               <div class="ms-2 me-auto">
                                   <div class="fw-bold">'.$name.'</div>
                                   '.$subject.'

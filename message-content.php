@@ -106,18 +106,27 @@ if (isset($_GET['messageid'])) {
 
         <div class="d-flex justify-content-center" style="margin-left: 250px; margin-right: 250px;">
             <div class="message-control">
-                
-                <div>
-                    <h4 style="font-size: 20px; margin: 30px; margin-bottom: 0; color: #ef4f4f;">From: Contact Name (contact@email.com)</h4>
+
+
+              <?php
+              
+              echo'
+              
+              <div>
+                    <h4 style="font-size: 20px; margin: 30px; margin-bottom: 0; color: #ef4f4f;">From: '.$dis_name.' ('.$dis_email.')</h4>
                 </div>
 
                 <div class="col-12">
-                    <h4 style="font-size: 40px; margin: 30px; margin-top: 10px;">Message Subject</h4>
+                    <h4 style="font-size: 40px; margin: 30px; margin-top: 10px;">'.$dis_subject.'</h4>
                 </div>
 
                 <div class="col-12">
-                    <p style="font-size: 30px; margin: 30px; margin-top: 50px;">Message content Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi ratione, reprehenderit dolorum quidem id, tempore aliquam, natus aut quaerat pariatur veritatis adipisci! Architecto alias ducimus natus fuga. Adipisci, aliquid pariatur ullam facere mollitia illo deleniti quibusdam voluptatem at dolorem ipsa itaque asperiores animi ex, tempora accusantium cupiditate aspernatur vero reiciendis! Exercitationem soluta molestias cumque impedit maiores laborum accusantium incidunt dolorum inventore quae id voluptatem nobis, iure corporis fugiat reiciendis delectus. Autem hic officia, ipsum accusamus nostrum nisi error dolor odio? Quam perferendis eaque dolor minima quaerat culpa, itaque rerum consectetur quidem nisi id corrupti. Neque provident eaque facilis iure unde.</p>
+                    <p style="font-size: 30px; margin: 30px; margin-top: 50px;">'.$dis_content.'</p>
                 </div>
+              
+              ';
+              
+              ?>
 
             </div>
         </div>
