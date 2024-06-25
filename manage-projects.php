@@ -154,7 +154,7 @@ if (!isset($_SESSION['user_name'])) {
             echo '</table>';
 
             // Pagination controls
-            echo '<div class="pagination" style="margin-left: 10px; font-size: 25px;">';
+            echo '<div style="margin-left: 10px; font-size: 25px;">';
             if ($current_page > 1) {
               echo '<a style="margin-right: 20px;" href="?page=' . ($current_page - 1) . '">&laquo; Previous</a>';
             }
