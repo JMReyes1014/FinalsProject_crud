@@ -1,6 +1,6 @@
 <?php 
 session_start(); // Start session to manage user session data
-include "db_conn.php"; // Include file for database connection
+include "connect.php"; // Include file for database connection
 
 // Check if username and password are submitted via POST
 if(isset($_POST['username']) && isset($_POST['password'])) {
@@ -30,7 +30,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     $sql = "SELECT * FROM users WHERE user_name = '$user' AND user_password = '$pass'";
 
     // Execute SQL query
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($con, $sql);
 
     // Check if exactly one row is returned (indicating valid credentials)
     if(mysqli_num_rows($result) === 1) {
