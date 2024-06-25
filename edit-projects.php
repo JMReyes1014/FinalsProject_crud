@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ('connect.php');
+include('connect.php');
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_name'])) {
@@ -8,12 +8,14 @@ if (!isset($_SESSION['user_name'])) {
     exit();
 }
 
-$alertScript = ""; // Initialize an empty script variable
-
-// Retrieve project information for the given ID
+// Initialize variables
 $dis_name = '';
 $dis_desc = '';
 $dis_photo = '';
+$updateSuccess = false;
+$errorOccurred = false;
+
+// Retrieve project information for the given ID
 if (isset($_GET['update-projectid'])) {
     $id = $_GET['update-projectid'];
     $sql = "SELECT * FROM `projects` WHERE projects_ID = ?";
@@ -33,13 +35,19 @@ if (isset($_GET['update-projectid'])) {
 // Handle form submission for editing project
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Update project title and description
-    $name = $_POST['name'];
-    $desc = $_POST['desc'];
-    $sql_update = "UPDATE `projects` SET project_title = ?, project_description = ? WHERE projects_ID = ?";
-    $stmt_update = $con->prepare($sql_update);
-    $stmt_update->bind_param("ssi", $name, $desc, $id);
-    $stmt_update->execute();
-    $stmt_update->close();
+    if (isset($_POST['name']) && isset($_POST['desc'])) {
+        $name = $_POST['name'];
+        $desc = $_POST['desc'];
+        $sql_update = "UPDATE `projects` SET project_title = ?, project_description = ? WHERE projects_ID = ?";
+        $stmt_update = $con->prepare($sql_update);
+        $stmt_update->bind_param("ssi", $name, $desc, $id);
+        if ($stmt_update->execute()) {
+            $updateSuccess = true;
+        } else {
+            $errorOccurred = true;
+        }
+        $stmt_update->close();
+    }
 
     // Check if file was uploaded
     if (isset($_FILES['file']) && $_FILES['file']['name']) {
@@ -51,51 +59,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql_update_photo = "UPDATE `projects` SET project_photo = ? WHERE projects_ID = ?";
             $stmt_update_photo = $con->prepare($sql_update_photo);
             $stmt_update_photo->bind_param("si", $file_name, $id);
-            if ($stmt_update_photo->execute() || $stmt_update->execute()) {
-                // Update displayed photo
+            if ($stmt_update_photo->execute()) {
                 $dis_photo = $file_name;
-                echo '
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Project Updated Successfully",
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#4CAF50",
-                                background: "#0e0d0d",
-                                color: "#fff",
-                                iconColor: "#4CAF50"
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = "manage-projects.php?update-projectid=' . $id . '";
-                                }
-                            });
-                        });
-                    </script>';
-                } else {
-                echo '
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: "Failed to update skill: ' . $stmt->error . '",
-                                confirmButtonText: "OK",
-                                confirmButtonColor: "#f44336",
-                                background: "#0e0d0d",
-                                color: "#fff",
-                                iconColor: "#f44336"
-                            });
-                        });
-                    </script>';
+                $updateSuccess = true;
+            } else {
+                $errorOccurred = true;
             }
+            $stmt_update_photo->close();
+        } else {
+            $errorOccurred = true;
         }
+    }
+
+    // Display success or error message
+    if ($updateSuccess) {
+        echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "success",
+                    title: "Project Updated Successfully",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#4CAF50",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#4CAF50"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "manage-projects.php?update-projectid=' . $id . '";
+                    }
+                });
+            });
+        </script>';
+    } elseif ($errorOccurred) {
+        echo '
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Failed to update project",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#f44336",
+                    background: "#0e0d0d",
+                    color: "#fff",
+                    iconColor: "#f44336"
+                });
+            });
+        </script>';
     }
 }
 
 $con->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
