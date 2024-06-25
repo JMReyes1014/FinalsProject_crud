@@ -32,6 +32,15 @@ if (isset($_GET['update-projectid'])) {
 
 // Handle form submission for editing project
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Update project title and description
+    $name = $_POST['name'];
+    $desc = $_POST['desc'];
+    $sql_update = "UPDATE `projects` SET project_title = ?, project_description = ? WHERE projects_ID = ?";
+    $stmt_update = $con->prepare($sql_update);
+    $stmt_update->bind_param("ssi", $name, $desc, $id);
+    $stmt_update->execute();
+    $stmt_update->close();
+
     // Check if file was uploaded
     if (isset($_FILES['file']) && $_FILES['file']['name']) {
         $file_name = $_FILES['file']['name'];
@@ -42,10 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql_update_photo = "UPDATE `projects` SET project_photo = ? WHERE projects_ID = ?";
             $stmt_update_photo = $con->prepare($sql_update_photo);
             $stmt_update_photo->bind_param("si", $file_name, $id);
-            if ($stmt_update_photo->execute()) {
+            if ($stmt_update_photo->execute() || $stmt_update->execute()) {
                 // Update displayed photo
                 $dis_photo = $file_name;
-                $stmt_update_photo->close();
                 echo '
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
