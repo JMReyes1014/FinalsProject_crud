@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2024 at 08:21 AM
+-- Generation Time: Jun 26, 2024 at 08:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,13 +41,8 @@ CREATE TABLE `contact` (
 --
 
 INSERT INTO `contact` (`contact_ID`, `user_ID`, `c_name`, `c_email`, `c_subject`, `c_message`) VALUES
-(2, 1, 'Jane Dane', 'JaneDane@email.com', 'I want to test your project 2', 'YAYYY'),
-(3, 1, 'das', 'dsa@email.com', 'dasdas', 'dsadas'),
-(4, 1, 'dsadsa', 'dsa@email.com', 'dasdasda', 'dsadas'),
-(5, 1, 'ewq', 'dsa@email.com', 'dasdasdadada', 'dsadsa'),
-(6, 1, 'ewq', 'dsa@email.com', 'dasdasdadada', 'dadsa'),
-(7, 1, 'ewq', 'dsa@email.com', 'dasdasdadada', 'pls work'),
-(8, 1, 'ewqss', 'dsa@email.com', 'dasdasdadadas', 'pls worksss');
+(11, 1, 'JM', 'jama081029@gmail.com', 'We\'re DONE', 'FINALLY Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at bibendum dolor, id eleifend ex. Donec in ipsum dui. Aenean eleifend nulla eget pharetra malesuada. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi condimentum sagittis augue, at efficitur orci blandit malesuada. Praesent at elit quis arcu ornare pulvinar. Suspendisse ac erat lobortis, pretium tellus eu, dignissim augue. Sed tempor nisi ac lacus iaculis, id placerat felis venenatis. Aliquam at libero eu mi ultricies gravida auctor eget quam. Praesent metus lectus, aliquam ut mollis tristique, efficitur eget augue. Donec aliquam consequat mi, id venenatis lorem aliquam ut. Nullam accumsan sollicitudin massa, vitae dignissim lacus feugiat et. In sollicitudin leo in lacus pretium, a semper ante blandit. Nam eget neque vitae dui varius aliquet. Quisque feugiat id ligula in imperdiet.'),
+(12, 1, 'Carl Johnson', 'All_youHad2doWasFlwDdmnTraincj@gmail.com', 'HELLO', 'I\'ve come to reach out about your car\'s extended warranty.');
 
 -- --------------------------------------------------------
 
@@ -93,7 +88,7 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`projects_ID`, `user_ID`, `project_title`, `project_description`, `project_photo`) VALUES
 (6, 1, 'LAYA (Legal Aid at Your Access)', 'An AI chatbot designed to address all your inquiries and needs related to Philippine laws. This advanced virtual assistant provides comprehensive and accurate information, helping you navigate legal questions, understand regulations, and stay informed about legal matters specific to the Philippines.', 'Project-1.png'),
-(7, 1, 'iPaws', 'A comprehensive pet tracker app that enables you to connect with fellow pet owners, locate the nearest veterinary services, and monitor your pet&#039;s daily activities and needs.', 'Project-2.png');
+(7, 1, 'iPaws', 'A comprehensive pet tracker app that enables you to connect with fellow pet owners, locate the nearest veterinary services, and monitor your pet\'s daily activities and needs.', 'Project-2.png');
 
 -- --------------------------------------------------------
 
@@ -183,25 +178,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `contact_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `education`
 --
 ALTER TABLE `education`
-  MODIFY `education_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `education_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `projects_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `projects_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `skills_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `skills_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
